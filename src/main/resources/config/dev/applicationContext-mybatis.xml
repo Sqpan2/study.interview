@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	">
+	
+	<!-- 配置数据源 -->
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="driverClassName" value="${mysql_driver}" />			<!-- 数据源驱动 -->
+		<property name="url" value="${jdbc_url}" />							<!-- 基本属性 url、user、password -->
+		<property name="username" value="${jdbc_username}" />
+		<property name="password" value="${jdbc_password}" />
+		<property name="initialSize" value="0" />							<!-- 初始化连接大小 -->
+		<property name="maxActive" value="20" />							<!-- 连接池的最大连接数 -->
+		<property name="minIdle" value="0" />								<!-- 最小空闲连接 -->
+		<property name="maxWait" value="60000" />							<!-- 配置获取连接等待超时的时间 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />		<!-- 空闲连接回收器线程间休眠的时间,以毫秒为单位 -->
+		<property name="minEvictableIdleTimeMillis" value="25200000" />		<!-- 连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="validationQuery" value="${validationQuery}" />		<!-- 验证连接是否有效 -->
+		<property name="testOnBorrow" value="false" />						<!-- 申请连接时是否做validationQuery检测 -->
+		<property name="testOnReturn" value="false" />						<!-- 释放连接时是否做validationQuery检测 -->
+		<property name="testWhileIdle" value="true" />
+		<property name="removeAbandonedTimeout" value="1800" />				<!-- 连接回收时间，单位秒 -->
+		<property name="removeAbandoned" value="true" />					<!-- 打开removeAbandoned功能：超过连接回收时间，回收连接。 -->
+		<property name="logAbandoned" value="true" />						<!-- 连接被回收时是否打印程序的stack traces日志 -->
+		<property name="filters" value="stat" />							<!-- 监控数据库 -->
+	</bean>
+
+	<!-- myBatis Sql映射文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:sqlmapper/*.xml" />
+		<property name="typeAliasesPackage" value="com.panshiqi.study.interview.entity.DO" />
+	</bean>
+	
+	<!-- sqlSessionTemplate -->
+	<bean id="sqlSession" class="com.panshiqi.study.interview.dao.SqlSession"></bean>
+	
+	<!-- 配置Spring的事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 开启事务控制的注解支持 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>

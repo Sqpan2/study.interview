@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+
+	<!-- 引入属性文件 -->
+	<context:property-placeholder location="classpath:application.properties" />
+	
+	<!-- 自动扫描(自动注入) -->
+	<context:component-scan base-package="com.panshiqi.study.interview" />
+	
+	<!-- 获取bean工具注入 -->
+	<bean id="springContextHolder" class="com.panshiqi.study.interview.common.util.SpringContextHolder" lazy-init="false" />
+
+	<!-- 加入spring注解 -->
+	<context:annotation-config />
+
+	<!-- 激活aop自动代理功能 -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+</beans>
