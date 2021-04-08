@@ -241,7 +241,7 @@
 
 	<build>
 		<!-- final jar/war name -->
-		<finalName>study.archetype.web.spring</finalName>
+		<finalName>interview</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

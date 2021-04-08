@@ -32,6 +32,14 @@ public class DemoController {
     @Autowired
     private DemoService         demoService;
 
+    
+    @RequestMapping(value = "/hello")
+    public @ResponseBody String hello(HttpServletRequest request) {
+        
+        return "[demo-->hello]  hello spring mvc!";
+    }
+    
+    
     @RequestMapping(value = "/log")
     public @ResponseBody String logUtilDemo(HttpServletRequest request) {
         try {
