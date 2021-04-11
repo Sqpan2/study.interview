@@ -241,7 +241,7 @@
 
 	<build>
 		<!-- final jar/war name -->
-		<finalName>interview</finalName>
+		<finalName>study.interview</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
